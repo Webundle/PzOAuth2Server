@@ -1,0 +1,106 @@
+/* CSS Document */
+
+.page{
+	background-color: #f9fafa;
+}
+
+#logo-result {
+	width: 95px;
+	height: 45px;
+	background: url("../images/logo_result_2.png");
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+#register-box.segments{
+	margin-top: 20%;
+	overflow: hidden;
+}
+#register-box.segments .segment{
+	width: 50%;
+}
+
+#app-ill{
+	padding: 0;
+}
+#app-ill .image{
+	border-radius: 4px 0 0 0;
+}
+#app-ill .header{
+	margin: 10px 20px;
+}
+#app-ill .header h3{
+	font-size: 24px;
+	line-height: 1.4
+}
+
+#user-info h1{
+	margin-bottom: 20px;
+}
+#user-info h5{
+	margin-bottom: 20px;
+	font-weight: 500;
+	font-size: 14px;
+	color: #B8B8B8;
+	text-decoration: underline;
+}
+
+#user-info .action{
+	margin-top: 30px;
+}
+
+
+/* Slideshow Theme */
+
+.bx-wrapper{
+	margin-bottom: 0;
+	border: none;
+	box-shadow: none;
+}
+.bx-controls.bx-has-pager{
+	display: block;
+	position: relative;
+}
+.bx-wrapper .bx-pager {
+	display: block;
+    top: -40px;
+	padding-top: 0;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a{
+	/* Oval: */
+	height: 14px;
+	width: 14px;
+	background: rgba(0,0,0,0.24);
+	border: 2px solid #FFFFFF;
+	border-radius: 14px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a:hover{
+	background: rgba(0,0,0,0.5);
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a.active{
+	background: #40A236;
+}
+
+@media only screen and (min-width: 768px){
+	
+	#user-info{
+		padding: 20px 40px;
+	}
+}
+
+@media only screen and (max-width: 767px){
+	.page{
+		background-image: url(../images/login_background.png);
+		background-position: bottom center;
+	}
+	#user-info{
+		border-left: none;
+	}
+	#user-info h1{
+		font-size: 30px;
+		margin-top: 20px;
+	}
+}
+

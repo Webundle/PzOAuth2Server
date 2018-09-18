@@ -1,0 +1,28 @@
+login:
+    path:  /login
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:login' }
+
+login_check:
+    path: /login_check
+
+logout:
+    path:   /logout
+
+register:
+    path:   /register
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:register' }
+
+oauth_login_url_generator:
+    path:   /oauth/v2/login-url-generator
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:oauthLoginUrlGenerator' }
+    
+oauth_login:
+    path:  /oauth/v2/login
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:oauthLogin' }
+
+oauth_login_check:
+    path:  /oauth/v2/login_check
+
+oauth_connect:
+    path:   /oauth/v2/connect
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:oauthConnect' }

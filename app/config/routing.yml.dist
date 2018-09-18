@@ -1,0 +1,20 @@
+puzzle_oauth_server:
+    resource: "@PuzzleOAuthServerBundle/Resources/config/routing.yml"
+    prefix:   /
+    host: '%host_account%'
+    
+# Nelmio Routing
+app.swagger_ui:
+    path: /doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+    host: '%host_apis%'
+    
+app.swagger:
+    path: /doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
+    host: '%host_apis%'
+
+
+

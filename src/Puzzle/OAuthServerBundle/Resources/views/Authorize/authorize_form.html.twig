@@ -1,0 +1,10 @@
+{{ form_start(form, {'method': 'POST',  'label_attr': {'class': 'oauth_authorize'} }) }}
+    <input type="submit" name="accepted" value="{{ 'authorize.accept'|trans({}, 'FOSOAuthServerBundle') }}" formaction="{{ url(app.request.get('_route'), app.request.query.all()|merge({'accepted': true})) }}" />
+    <input type="submit" name="rejected" value="{{ 'authorize.reject'|trans({}, 'FOSOAuthServerBundle') }}" />
+
+    {{ form_row(form.client_id, {'value': data.client_id}) }}
+    {{ form_row(form.response_type, {'value': data.response_type}) }}
+    {{ form_row(form.redirect_uri, {'value': data.redirect_uri}) }}
+    {{ form_row(form.state, {'value': data.state}) }}
+    {{ form_row(form.scope, {'value': data.scope}) }}
+{{ form_end(form) }}

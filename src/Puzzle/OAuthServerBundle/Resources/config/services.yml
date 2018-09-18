@@ -1,0 +1,153 @@
+parameters:
+    security.exception_listener.class: Puzzle\OAuthServerBundle\Security\Firewall\ExceptionListener
+    fos_oauth_server.server.options:
+        key:                    []
+        supported_scopes:       
+            - user
+            - user_photos
+            - user_contacts
+        access_token_lifetime:  1296000 #15jours
+        refresh_token_lifetime: 1299600 #16jours
+        #auth_code_lifetime: 30
+        # Token type to respond with. Currently only "Bearer" supported.
+        #token_type: string
+        #realm:
+        # Enforce redirect_uri on input for both authorize and token steps.
+        enforce_redirect: true #or false
+        # Enforce state to be passed in authorization (see RFC 6749, section 10.12)
+        enforce_state: true #or false
+    roles:
+        user_access: 
+            description: user.role.access
+        user_manage: 
+            description: user.role.manage
+        media_access: 
+            description: media.role.access
+        media_manage: 
+            description: media.role.manage
+        article_access: 
+            description: article.role.access
+            dependencies: user_access,media_access
+        article_manage: 
+            description: article.role.manage
+            dependencies: user_access,media_manage
+            
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+        
+    # Default Services
+    Puzzle\OAuthServerBundle\:
+        resource: '../../../OAuthServerBundle/*'
+        public: true
+        exclude: '../../../OAuthServerBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener,Security,Traits}'
+    
+    # Controller
+    Puzzle\OAuthServerBundle\Controller\:
+        resource: '../../../OAuthServerBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+          
+    # Security
+    pos.security.authentication.form_entry_point:
+        class: Puzzle\OAuthServerBundle\Security\Http\EntryPoint\XmlHttpRequestEntryPoint
+        arguments: [ '@router' ]
+        
+    # Handler
+    pos.handler.authentication_success:
+        class: Puzzle\OAuthServerBundle\Security\Http\Authentication\AuthenticationSuccessHandler
+        arguments: [ '@router', '@security.http_utils', [] ]
+    
+    # Form    
+    fos_oauth_server.authorize.form_config:
+        class: Puzzle\OAuthServerBundle\Form\FormConfig
+        arguments:
+            $name: '%fos_oauth_server.authorize.form.name%'
+            $type: '%fos_oauth_server.authorize.form.type%'
+            $dataClass: 'FOS\OAuthServerBundle\Form\Model\Authorize'
+            $dispatcher: '@event_dispatcher'
+
+    fos_oauth_server.authorize.form:
+        class: Puzzle\OAuthServerBundle\Form\Form
+        # autowire: false
+        arguments:
+            $config: '@fos_oauth_server.authorize.form_config'
+
+    fos_oauth_server.authorize.form.handler.default:
+        class: Puzzle\OAuthServerBundle\Form\Handler\AuthorizeFormHandler
+        # autowire: false
+        arguments:
+            $form: '@fos_oauth_server.authorize.form'
+            $requestStack: '@request_stack'
+    
+    # Service
+    fos_oauth_server.server:
+        class: Puzzle\OAuthServerBundle\Service\OAuth2
+        arguments:
+            $storage: '@fos_oauth_server.storage'
+            $config:  '%fos_oauth_server.server.options%'
+    
+    papis.repository:
+        class: Puzzle\OAuthServerBundle\Service\Repository
+        arguments:
+            $doctrine: '@doctrine'
+            $defaultLimit:  50
+            $defaultPage: 1
+            $excludes: ['page', 'limit', 'orderBy']
+            
+    papis.error_factory:
+        class: Puzzle\OAuthServerBundle\Service\ErrorFactory
+        arguments:
+            $translator: '@translator'
+            
+    # Provider   
+    pos.provider.user:
+        class: Puzzle\OAuthServerBundle\Provider\UserProvider
+        arguments:
+            $em: '@doctrine.orm.entity_manager'
+    
+    # EventListener
+    pos.event_listener.oauth:
+        class:  Puzzle\OAuthServerBundle\EventListener\OAuthEventListener
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: onPreAuthorizationProcess }
+            - { name: kernel.event_listener, event: fos_oauth_server.post_authorization_process, method: onPostAuthorizationProcess }
+    
+    pos.event_listener.user:
+        class:  Puzzle\OAuthServerBundle\EventListener\UserListener
+        arguments: [ '@doctrine.orm.entity_manager', '@router', '@mailer', '@twig', '%user.mail%' ]
+        tags:
+            - { name: kernel.event_listener, event: user.create, method: onCreate }
+            - { name: kernel.event_listener, event: user.update_password, method: onUpdatePassword }
+    
+    # Twig extension
+    pos.twig.extension:
+        class: Puzzle\OAuthServerBundle\Twig\PuzzleOAuthServerExtension
+        arguments: 
+            $em: '@doctrine.orm.entity_manager' 
+            $twig: '@twig'
+            $roles: '%roles%'
+        tags:
+            - { name: twig.extension }
+    
+    # Alias OAuthServer
+    Puzzle\OAuthServerBundle\Provider\UserProvider: '@pos.provider.user'
+    Puzzle\OAuthServerBundle\Service\OAuth2: '@fos_oauth_server.server'
+    Puzzle\OAuthServerBundle\Service\OAuthStorage: '@fos_oauth_server.storage.default'
+    Puzzle\OAuthServerBundle\Form\FormConfig: '@fos_oauth_server.authorize.form_config'
+    Puzzle\OAuthServerBundle\Form\Form: '@fos_oauth_server.authorize.form'
+    Puzzle\OAuthServerBundle\Form\Handler\AuthorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+    FOS\OAuthServerBundle\Model\TokenManagerInterface: '@fos_oauth_server.access_token_manager'
+    
+    # Alias API
+    Puzzle\OAuthServerBundle\Service\Repository: '@papis.repository'
+    Puzzle\OAuthServerBundle\Service\ErrorFactory: '@papis.error_factory'
+        

@@ -1,0 +1,62 @@
+{% extends 'PuzzleOAuthServerBundle::layout_security.html.twig' %}
+
+{% block title %}{{ parent() }} - Se connecter {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/css/login.css') }}">
+{% endblock %}
+
+{% block formerror %}
+    {% if error %}
+        {{ error.messageKey|trans(error.messageData, 'main') }}
+    {% endif %}
+{% endblock %}
+
+{% block formillustrator %}
+    <div class="">
+    	<img class="image" src="https://unsplash.it/420/360/?image=882" alt="" />
+    </div>
+    <div class="header m0">
+    	<div class="content">
+    		<h3>Découvez des moments inoubliables</h3>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block formtitle %} Se connecter {% endblock %}
+{% block form %}
+    <form id="c-info" class="form"
+    	action="{{ url('login_check') }}" method="post">
+    	<div class="field">
+    		<label for="name">Email ou Nom d'utilisateur</label>
+    		<div class="input icon">
+    			<input id="" placeholder="Votre email ou votre nom d'utilisateur"
+    				name="_username" type="text" value="{{ last_username }}"> <i
+    				class="icon fa fa-user" aria-hidden="true"></i>
+    		</div>
+    	</div>
+    	<div class="field">
+    		<label for="surname">Mot de passe</label>
+    		<div class="input icon">
+    			<input id="f-surname" placeholder="Mot de passe" name="_password"
+    				type="password"> <i class="icon fa fa-lock"
+    				aria-hidden="true"></i>
+    
+    		</div>
+    	</div>
+    	<div class="field">
+    		<button type="submit" class="button fluid button-primary mt2">Se
+    			connecter</button>
+    	</div>
+    </form>
+    <div class="instruction align-center">
+    	<p class="text-secondary align-center text-secondary">Vous avez
+    		oubliÉ votre mot de passe ?</p>
+    	<p class="align-center text-secondary">
+    		Vous n'avez pas de compte? <a href="{{ url('register') }}">Créer
+    			un compte</a>
+    	</p>
+    </div>
+{% endblock %}
+

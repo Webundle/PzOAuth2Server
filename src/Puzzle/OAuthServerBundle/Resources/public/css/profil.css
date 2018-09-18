@@ -1,0 +1,173 @@
+
+.header-bottom{
+	border-bottom: 1px solid rgba(218,218,218,.21);
+}
+
+.page.page-current{
+	padding-top: 120px;
+}
+
+
+.cpn.cpn-user-header .header{
+	font-size: 36px;
+	font-weight: lighter;
+	
+}
+.cpn.cpn-user-header .header img{
+	margin-right: 20px;
+}
+.cpn.cpn-user-header .header .sub.header{
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.cpn.cpn-profil-menu{
+	padding-left: 125px;
+}
+.cpn.cpn-profil-menu .divider{
+	margin-top: 0;
+}
+
+
+.cpn.tab-contentes{
+	padding-left: 125px;
+}
+
+
+.definitions > .item{
+	display: flex;
+	margin-bottom: 20px;
+}
+.definitions .item .title{
+	flex-basis: 20%;
+}
+.definitions .item .content{
+		flex-basis: 80%;
+}
+.cpn.tab-contentes h6{
+	margin: 40px 0 30px;
+}
+
+.tab .tab-content{
+	display: none;
+}
+.tab .tab-content.active{
+	display: block;
+}
+
+@media only screen and (min-width: 768px){
+	
+	#user-info{
+		padding: 20px 40px;
+	}
+}
+
+@media only screen and (max-width: 767px){
+	.page.page-current{
+		padding-top: 48px;
+	}
+	.cpn-user-header h1.header > .content{
+		font-size: 21px;
+	}
+	.cpn-user-header h1.header > .content .sub.header{
+		
+	}
+	
+	.cpn-user-header h1.header > .image{
+		width: 64px;
+		height: 64px;
+		background-color: antiquewhite;
+		margin-right: 10px;
+	}
+	.cpn-user-header-wrapper{
+		background: #F6F6F6;
+		border-bottom: 1px solid #E9E9E9;
+	}
+	.cpn.cpn-user-header .header .sub.header{
+		font-size: 13px;
+		margin-top: -10px;
+		font-weight: normal;
+		color: #8D8D8D;
+	}
+	.cpn-profil-menu-wrapper{
+		padding: 0;
+	}
+	.cpn.cpn-profil-menu{
+		padding-left: 0;
+	}
+	.cpn.cpn-profil-menu .item.dropdown.selection{
+		width: 100%;
+	}
+	.cpn.cpn-profil-menu .item.dropdown.selection .text{
+		width: calc(100% - 20px);
+	}
+	
+	.tab-contentes-wrapper{
+		padding: 0;
+	}
+	.cpn.tab-contentes{
+		padding-left: 0;
+	}
+	.cpn.tab-contentes h6 {
+		margin: 10px 15px;
+		font-size: 14px;
+		color: #444444;
+		font-weight: bold;
+	}
+
+	.definitions .item
+	{
+		padding: 8px 0;
+		margin: 0;
+	}
+	
+	.definitions .field
+	{
+		padding: 8px 10px;
+	}
+
+	.definitions .item:nth-child(2n),
+	.definitions .field:nth-child(2n)
+	{
+		background: #F7F7F7;
+	}
+
+	.definitions .item .title{
+		flex-basis: 35%;
+		padding-left: 15px;
+		float: left;
+		opacity: 0.7;
+		font-weight: normal;
+		color: #444444;
+	}
+	.definitions .item .content{
+		flex-basis: 65%;
+		padding-right: 15px;
+		float: right;
+		text-align: right;
+	}
+	.definitions .item .content a{
+		font-weight: bold;
+	}
+	.definitions .item.description{
+		display: block;
+	}
+	.definitions .item.description .content{
+		width: 100%;
+		text-align: left;
+		padding: 8px 15px;
+		float: none;
+	}
+	.definitions .item.description .title{
+		width: 100%;
+		padding: 8px 15px;
+		float: none;
+	}
+	
+	.definitions .item.description .title:first-child{
+		font-size: 14px;
+		color: #444444;
+		font-weight: bold;
+		opacity: 1;
+	}
+}

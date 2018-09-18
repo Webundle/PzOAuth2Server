@@ -1,0 +1,6 @@
+{% extends "PuzzleOAuthServerBundle::layout.html.twig" %}
+
+{% block fos_oauth_server_content %}
+{{ authorization_builder_content(client, scope) }}
+{% include "PuzzleOAuthServerBundle:Authorize:authorize_form.html.twig" %}
+{% endblock fos_oauth_server_content %}

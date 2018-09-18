@@ -1,0 +1,132 @@
+security:
+    encoders:
+        Puzzle\OAuthServerBundle\Entity\User: 
+            algorithm:                        sha512
+            encode_as_base64:                 false
+            iterations:                       1
+            
+    role_hierarchy:
+        ROLE_ADMIN:                           ROLE_USER
+        ROLE_SUPER_ADMIN:                     [ROLE_ALLOWED_TO_SWITCH, ROLE_ADMIN]
+
+    providers:
+        user_provider:
+            id:                               pos.provider.user
+             
+    firewalls:
+        secured_area: 
+            pattern:                          ^/demo/secured/
+            form_login:
+                provider:                     user_provider
+                check_path:                   _security_check
+                login_path:                   _demo_login
+            logout: 
+                path:                         _demo_logout
+                target:                       _demo
+        
+        dev:
+            pattern:                          ^/(_(profiler|wdt)|css|images|js)/
+            security:                         false
+        
+        public:
+            host:                             '%host_apis%'
+            pattern:                          '^/public'
+            anonymous:                        ~    
+            
+        api:
+            host:                             '%host_apis%'
+            pattern:                          '^/v1'
+            fos_oauth:                        true
+            stateless:                        true
+            anonymous:                        true
+            
+        oauth_token:
+            host: "%host_account%"
+            pattern:    ^/oauth/v2/token
+            security:       false
+            
+        oauth_authorize:
+            host:                             '%host_account%'
+            pattern:                          '^/oauth/v2'
+#            entry_point:                     pos.security.authentication.form_entry_point
+            entry_point:                      null
+            logout_on_user_change:            true
+            form_login:
+                provider:                     user_provider
+                check_path:                   oauth_login_check
+                login_path:                   oauth_login
+                success_handler:              pos.handler.authentication_success
+                username_parameter:           _username
+                password_parameter:           _password
+                csrf_parameter:               _csrf_token
+                csrf_token_id:                authenticate
+                post_only:                    true
+                remember_me:                  true
+                require_previous_session:     true
+            switch_user:
+                provider:                     user_provider
+                parameter:                    _swu
+                role:                         ROLE_ALLOWED_TO_SWITCH
+            remember_me:
+                secret:                       '%secret%'
+                path:                         /
+                domain:                       '%host_account%'
+                secure:                       false
+                httponly:                     true
+                lifetime:                     31536000
+                remember_me_parameter:        _remember_me
+            logout:
+                path:                         logout
+                target:                       pos_oauth_login
+                invalidate_session:           true
+                delete_cookies:
+                    a:                        { path: /, domain: ~ }
+            anonymous:                        true
+
+        main:
+            host:                             '%host_account%'
+            pattern:                          '^/'
+            entry_point:                     pos.security.authentication.form_entry_point
+            entry_point:                      null
+            logout_on_user_change:            true
+            form_login:
+                provider:                     user_provider
+                check_path:                   login_check
+                login_path:                   login
+                success_handler:              pos.handler.authentication_success
+                username_parameter:           _username
+                password_parameter:           _password
+                csrf_parameter:               _csrf_token
+                csrf_token_id:                authenticate
+                post_only:                    true
+                remember_me:                  true
+                require_previous_session:     true
+            switch_user:
+                provider:                     user_provider
+                parameter:                    _swu
+                role:                         ROLE_ALLOWED_TO_SWITCH
+            remember_me:
+                secret:                       '%secret%'
+                path:                         /
+                domain:                       '%host_account%'
+                secure:                       false
+                httponly:                     true
+                lifetime:                     31536000
+                remember_me_parameter:        _remember_me
+            logout:
+                path:                         logout
+                target:                       login
+                invalidate_session:           true
+                delete_cookies:
+                    a:                        { path: /, domain: ~ }
+            anonymous:                        true
+
+    access_control:
+        - { path: ^/oauth/v2/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
+        - { path: ^/, roles: ROLE_USER }
+        # API Zone
+        - { path: ^/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_apis%' }
+        - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_apis%' }
+        - { path: ^/v1, roles: ROLE_USER, host: '%host_apis%' }

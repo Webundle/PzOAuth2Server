@@ -1,0 +1,54 @@
+.page{
+	background-color: #f9fafa;
+}
+
+#login-box.segments{
+	margin-top: 25%;
+	overflow: hidden;
+}
+#login-box.segments .segment{
+	width: 50%;
+}
+
+#app-ill{
+	padding: 0;
+}
+#app-ill .image{
+	border-radius: 4px 0 0 0;
+}
+#app-ill .header{
+	margin: 10px 20px;
+}
+#app-ill .header h3{
+	font-size: 24px;
+	line-height: 1.4
+}
+
+#user-info h1{
+	margin-bottom: 20px;
+}
+
+.field button.button{
+	margin-top: 20px;
+}
+
+@media only screen and (min-width: 768px){
+	
+	#user-info{
+		padding: 20px 40px;
+	}
+}
+
+@media only screen and (max-width: 767px){
+	.page{
+		background-image: url(../images/login_background.png);
+		background-position: bottom center;
+	}
+	#user-info{
+		border-left: none;
+	}
+	#user-info h1{
+		font-size: 30px;
+		margin-top: 20px;
+	}
+}

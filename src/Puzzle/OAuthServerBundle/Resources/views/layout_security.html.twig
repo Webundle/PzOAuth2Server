@@ -1,0 +1,57 @@
+{% extends 'PuzzleOAuthServerBundle::base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700,900,500" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/forme/assets/stylesheet/forme.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/animate.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/animate.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/notification/css/ns-default.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/notification/css/ns-style-bar.css') }}" />
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/css/main.css') }}">
+
+	<script type="text/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/modernizr/modernizr.custom.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	<div class="forme-container-wrapper slide-in-on-top">
+		<div class="forme-container pusher">
+			<div class="page-wrapper">
+				<div class="page page-current">
+					<div class="container">
+						<div class="row">
+							<div class="columns medium-10 vsmall-11 centered">
+								<div id="login-box" class="horizontal segments">
+								  <div id="app-ill" class="segment hide-vsmall">
+									  {% block formillustrator %}{% endblock %}
+								  </div>
+								  <div id="puzzleoauthserver-info" class="segment">
+								  		{% block formerror %}{% endblock %}
+										<h1 class="text-primary">{% block formtitle %}{% endblock %}</h1>
+									  	<div class="content">
+										  	{% block form %}{% endblock %}
+									  	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<!-- Core main script -->
+	<script type="text/javascript" defer src="https://use.fontawesome.com/9d7edce240.js"></script>
+	<script type="application/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/jquery.min.js') }}"></script>
+	<script type="application/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/lodash.min.js') }}"></script>
+	<script type="application/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/is.min.js') }}"></script>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+parameters:
+    
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+    
+    # Default Services
+    Puzzle\OAuthServerBundle\:
+        resource: '../../src/Puzzle/OAuthServerBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/OAuthServerBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener,Security,Traits}'
+    
+    # Controller
+    Puzzle\OAuthServerBundle\Controller\:
+        resource: '../../src/Puzzle/OAuthServerBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+    
+    # Alias OAuthServer
+    Puzzle\OAuthServerBundle\Provider\UserProvider: '@pos.provider.user'
+    Puzzle\OAuthServerBundle\Service\OAuth2: '@fos_oauth_server.server'
+    Puzzle\OAuthServerBundle\Service\OAuthStorage: '@fos_oauth_server.storage.default'
+    Puzzle\OAuthServerBundle\Form\FormConfig: '@fos_oauth_server.authorize.form_config'
+    Puzzle\OAuthServerBundle\Form\Form: '@fos_oauth_server.authorize.form'
+    Puzzle\OAuthServerBundle\Form\Handler\AuthorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+    FOS\OAuthServerBundle\Model\TokenManagerInterface: '@fos_oauth_server.access_token_manager'
+    
+    # Alias API
+    Puzzle\OAuthServerBundle\Service\Repository: '@papis.repository'
+    Puzzle\Api\MediaBundle\Service\MediaManager: '@papis.media_manager'
+    Puzzle\Api\MediaBundle\Service\MediaUploader: '@papis.media_uploader'
+    Puzzle\OAuthServerBundle\Service\ErrorFactory: '@papis.error_factory'
+    

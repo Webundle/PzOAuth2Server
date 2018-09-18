@@ -1,0 +1,12 @@
+token:
+    resource: "@PuzzleOAuthServerBundle/Resources/config/routing/token.xml"
+
+authorize:
+    resource: "@PuzzleOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+security:
+    resource: "@PuzzleOAuthServerBundle/Resources/config/routing/security.yml"
+
+app:
+    path: /
+    defaults: { _controller: 'PuzzleOAuthServerBundle:Default:index' }

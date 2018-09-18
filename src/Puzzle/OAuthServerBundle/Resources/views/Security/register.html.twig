@@ -1,0 +1,143 @@
+{% extends 'PuzzleOAuthServerBundle::layout_security.html.twig' %}
+
+{% block title %}{{ parent() }} - Créer un compte {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/lib/jquery.bxslider/jquery.bxslider.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/puzzleoauthserver/css/register.css') }}">
+{% endblock %}
+
+{% block formtitle %} Créer un compte {% endblock %}
+
+{% block formillustrator %}
+	<div class="">
+		<ul class="bxslider">
+			<li><img src="https://unsplash.it/420/360/?image=882" /></li>
+			<li><img src="https://unsplash.it/420/360/?image=883" /></li>
+			<li><img src="https://unsplash.it/420/360/?image=884" /></li>
+			<li><img src="https://unsplash.it/420/360/?image=885" /></li>
+		</ul>
+	</div>
+	<div class="header m0">
+		<div class="content">
+			<h3>Découvez des moments inoubliables</h3>
+		</div>
+	</div>
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form, { 'attr': {'class': 'form p-info'}}) }}
+        <div class="content content-1">
+        	<h5>Mes informations personnelles</h5>
+        	<div class="field">
+        		{{ form_label(form.firstName) }}
+        		<div class="input icon">
+        			{{ form_widget(form.firstName, {'id': 'f-name'}) }}
+        			<i class="icon fa fa-user" aria-hidden="true"></i>
+        		</div>
+        	</div>
+        	<div class="field">
+        		{{ form_label(form.lastName) }}
+        		<div class="input icon">
+        			{{ form_widget(form.lastName, {'id': 'f-surname'}) }}
+        			<i class="icon fa fa-user" aria-hidden="true"></i>
+        		</div>
+        	</div>
+        	<div class="field">
+        		{{ form_label(form.email) }}
+        		<div class="input icon">
+        			{{ form_widget(form.email, {'id':'f-email'}) }}
+        			<i class="icon fa fa-envelope-o" aria-hidden="true"></i>
+        		</div>
+        	</div>
+        </div>
+        <div class="content content-2 hidden">
+        	<h5>Mes informations de sécurité</h5>
+        	<div class="field">
+        		{{ form_label(form.username) }}
+        		<div class="input icon">
+        			{{ form_widget(form.username, {'id':'f-username'}) }}
+        			<i class="icon fa fa-lock" aria-hidden="true"></i>
+        		</div>
+        	</div>
+        	<div class="field">
+        		{{ form_label(form.plainPassword.first) }}
+        		<div class="input icon">
+        			{{ form_widget(form.plainPassword.first, {'id': 'f-password'}) }}
+        			<i class="icon fa fa-lock" aria-hidden="true"></i>
+        		</div>
+        		<div class="description">Le mot de passe doit avoir 8
+        			charactères</div>
+        	</div>
+        	<div class="field">
+        		{{ form_label(form.plainPassword.second) }}
+        		<div class="input icon">
+        			{{ form_widget(form.plainPassword.second, {'id': 'f-password-confirm'}) }}
+        			<i class="icon fa fa-lock" aria-hidden="true"></i>
+        		</div>
+        	</div>
+        </div>
+        <div class="action">
+        	<a id="reg-next" class="button disabled pull-right" href="">Suivant
+        		<i class="fa fa-arrow-right" aria-hidden="true"></i>
+        	</a>
+        	{{ form_widget(form.register, {'id': 'reg-submit'}) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/jquery.bxslider/jquery.bxslider.min.js') }}"></script>
+	<script type="application/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/forme/assets/javascripts/form.js') }}"></script>
+	<script type="application/javascript" src="{{ asset('bundles/puzzleoauthserver/lib/forme/assets/javascripts/page-header.js') }}"></script>
+	
+	<script type="application/javascript">
+		
+		$('.bxslider').bxSlider({
+			  mode: 'fade',
+			  speed: 2000,
+			  pause: 5000,
+			  easing: 'linear',
+			  controls: false,
+			  preloadImages: 'all',
+			  auto: true
+		  });
+		
+		var fields = {
+				name: $('#f-name'),
+				surname: $('#f-surname'),
+				email: $('#f-email')
+			};
+		
+		var activeNext = function(){
+			if (fields.name.val() && fields.surname.val() && fields.email.val()){
+				$("#reg-next").addClass('button-primary').removeClass('disabled');
+			} else{
+				$("#reg-next").removeClass('button-primary').addClass('disabled');
+			}
+		};
+
+		fields.name.on('keyup', function(){
+			activeNext();
+		});
+		fields.surname.on('keyup', function(){
+			activeNext();
+		});
+		fields.email.on('keyup', function(){
+			activeNext();
+		});
+
+		$("#reg-next").click(function(e){
+			e.preventDefault();
+			$(".content-1").addClass('hidden');
+			$(".content-2").removeClass('hidden');
+			$("#f-username").val($("#f-email").val());
+			$(this).addClass('hide');
+			$("#reg-submit").removeClass('hide');
+		});
+
+	</script>
+{% endblock %}
+

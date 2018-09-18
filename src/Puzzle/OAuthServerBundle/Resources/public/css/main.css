@@ -1,0 +1,147 @@
+
+
+/** TYPOGRAPHIE */
+
+h1, h2, h3{
+	font-weight: 100;
+}
+
+#logo-result {
+	width: 95px;
+	height: 45px;
+	background: url("../images/logo_result_2.png");
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.region-header.page-header{
+	position: fixed;
+}
+
+
+.header-bottom{
+	border-bottom: 1px solid rgba(218,218,218,.21);
+}
+
+
+.region-canvas_left .menu.vertical{
+	margin-top: 80px;
+	border-radius: 0px;
+	border: none;
+}
+.region-canvas_left .menu.vertical > .item{
+	font-size: 14px;
+	font-weight: 200
+}
+.region-canvas_left .menu.vertical > .item:before{
+	height: 0;
+}
+.region-canvas_left .menu.vertical > .item.active{
+	background-color:  rgba(24, 159, 71, 1);
+	color: #FFFFFF;
+}
+.region-canvas_left .menu.vertical > .item:last-child,
+.region-canvas_left .menu.vertical > .item:first-child{
+    border-radius: 0px;
+}
+
+
+/*  For Safarie */
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .header-bottom {
+	  background-color: rgba(249, 250, 250, 0.9);
+      -webkit-backdrop-filter: brightness(1.5) blur(5px);
+      backdrop-filter: brightness(1.5) blur(5px);
+  }
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 10px;
+  border-top: 1px solid #DADADA;
+  background-color: #F7F7F7;
+}
+#footer a {
+  color: #737373;
+}
+#footer a:hover {
+  color: #444;
+}
+#footer .list-inline {
+  display: block;
+  float: right;
+  margin: 0;
+}
+#footer .list-inline li{
+  float: left;
+  margin-right: 20px;
+}
+
+
+.menu.pointing.secondary {
+    border-bottom: 1px solid #DCDCDC;
+}
+.menu.pointing.secondary > .item {
+    margin: 0em 0em -1px;
+	border-bottom: 1px solid transparent;
+}
+
+@media only screen and (max-width: 767px){
+	#results.page{
+		background-color: #f9fafa;
+	}
+	
+	#logo-result {
+		display: inline-block;
+		width: 57px;
+		height: 30px;
+		background: url("../images/logo_top_vsmall.png");
+		background-position: right center;
+		background-repeat: no-repeat;
+	}
+
+	.top-form .form .input input{
+		width: calc(100% - 50px);
+	}
+	
+	#search-results .article .header > .image{
+		width: 70px;
+		height: 70px;
+	}
+	
+	#bottom-sharing .image img{
+		height: 70px;
+	   	width: 70px;
+	}
+
+	#bottom-sharing .content h3{
+    	font-weight: normal;
+		font-size: 17px;
+	}
+	
+	.region-header.page-header .button.button-canvas{
+		width: 20px;
+		margin: 0;
+		padding: 1px;
+		font-size: 17px;
+		float: left;
+		background-color: #FFFFFF
+	}
+	
+	.region-header.page-header.header-small{
+		height: 48px;
+	}
+	.region-header.page-header.header-small .header-front{
+		height: 48px;
+	}
+	
+	.region-header.page-header.header-small .header-front h2{
+		font-size: 22px;
+		color: #4E4E4E;
+		font-weight: 200;
+		margin-top: -2px
+	}
+}

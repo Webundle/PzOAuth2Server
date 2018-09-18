@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    	<meta name="description" content="Faciliter la vie des ivoiriens est la mission de Aynid, le moteur de recherche de produits #1 en Côte d'ivoire.">
+    	<meta name="keywords" content="">
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body {% block bodyattributes %}{% endblock %}>
+        {% block body %}
+        	{% block header %}{% endblock %}
+            {% block side %}{% endblock %}
+            {% block content %}{% endblock %}
+            {% block footer %}{% endblock %}
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
