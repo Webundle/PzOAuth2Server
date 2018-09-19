@@ -6,7 +6,3 @@ authorize:
 
 security:
     resource: "@PuzzleOAuthServerBundle/Resources/config/routing/security.yml"
-
-app:
-    path: /
-    defaults: { _controller: 'PuzzleOAuthServerBundle:Default:index' }
