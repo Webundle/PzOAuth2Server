@@ -5,6 +5,8 @@ namespace Puzzle\OAuthServerBundle\Entity;
 use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
 use Puzzle\OAuthServerBundle\Entity\User;
+use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Model\Blameable\Blameable;
 
 /**
  * @ORM\Table(name="oauth_server_client")
@@ -12,6 +14,9 @@ use Puzzle\OAuthServerBundle\Entity\User;
  */
 class Client extends BaseClient
 {
+    use Timestampable,
+        Blameable;
+    
     /**
      * @var string
      *
@@ -37,55 +42,39 @@ class Client extends BaseClient
 	 */
 	private $isInterne;
 	
-	/**
-      * @ORM\ManyToOne(targetEntity="Puzzle\OAuthServerBundle\Entity\User")
-      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-      */
-	protected $user;
-	
-	public function __construct(){
-		$this->users = new \Doctrine\Common\Collections\ArrayCollection();
+	public function __construct() {
 		parent::__construct();
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setName($name){
+	public function setName($name) : self {
 		$this->name = $name;
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getName(){
+	public function getName() :? string {
 		return $this->name;
 	}
 	
-    public function setUser(User $user){
-    	$this->user = $user;
-        return $this;
-    }
-
-    public function getUser(){
-        return $this->user;
-    }
-    
-    public function setHost($host){
+    public function setHost($host) : self {
         $this->host = $host;
         return $this;
     }
     
-    public function getHost(){
+    public function getHost() :? string {
         return $this->host;
     }
     
-    public function setInterne(bool $interne){
+    public function setInterne(bool $interne) : self {
         $this->isInterne = $interne;
         return $this;
     }
     
-    public function isInterne(){
+    public function isInterne() :? bool {
         return $this->isInterne;
     }
 }
