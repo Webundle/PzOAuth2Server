@@ -51,6 +51,7 @@ class Client extends BaseClient
 	 */
 	public function setName($name) : self {
 		$this->name = $name;
+		return $this;
 	}
 	
 	/**
