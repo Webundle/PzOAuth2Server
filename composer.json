@@ -24,7 +24,7 @@
 		"doctrine/doctrine-bundle" : "^1.6",
 		"doctrine/orm" : "^2.5",
 		"friendsofsymfony/http-cache-bundle" : "^2.3",
-		"friendsofsymfony/oauth-server-bundle" : "dev-master",
+		"friendsofsymfony/oauth-server-bundle" : "^1.6",
 		"friendsofsymfony/rest-bundle" : "^2.3",
 		"guzzlehttp/guzzle" : "^6.3",
 		"guzzlehttp/psr7" : "^1.4",
