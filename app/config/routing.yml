@@ -1,3 +1,38 @@
+puzzle_api_page:
+    resource: "@PuzzleApiPageBundle/Resources/config/routing.yml"
+    prefix:   /v1
+    host:     '%host_apis%'
+
+puzzle_api_expertise:
+    resource: "@PuzzleApiExpertiseBundle/Resources/config/routing.yml"
+    prefix:   '/v1/expertise'
+    host:     '%host_apis%'
+
+puzzle_api_newsletter:
+    resource: "@PuzzleApiNewsletterBundle/Resources/config/routing.yml"
+    prefix:   '/v1/newsletter'
+    host:     '%host_apis%'
+
+puzzle_api_contact:
+    resource: "@PuzzleApiContactBundle/Resources/config/routing.yml"
+    prefix:   '/v1/contact'
+    host:     '%host_apis%'
+
+puzzle_api_media:
+    resource: '@PuzzleApiMediaBundle/Resources/config/routing.yml'
+    prefix:   '/v1/media'
+    host:     '%host_apis%'
+
+puzzle_api_user:
+    resource: '@PuzzleApiUserBundle/Resources/config/routing.yml'
+    prefix:   '/v1'
+    host:     '%host_apis%'
+
+puzzle_api_blog:
+    resource: '@PuzzleApiBlogBundle/Resources/config/routing.yml'
+    prefix:   '/v1/blog'
+    host:     '%host_apis%'
+
 puzzle_oauth_server:
     resource: "@PuzzleOAuthServerBundle/Resources/config/routing.yml"
     prefix:   /

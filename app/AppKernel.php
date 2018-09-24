@@ -28,7 +28,14 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
-            new Puzzle\OAuthServerBundle\PuzzleOAuthServerBundle()
+            new Puzzle\OAuthServerBundle\PuzzleOAuthServerBundle(),
+            new Puzzle\Api\BlogBundle\PuzzleApiBlogBundle(),
+            new Puzzle\Api\UserBundle\PuzzleApiUserBundle(),
+            new Puzzle\Api\MediaBundle\PuzzleApiMediaBundle(),
+            new Puzzle\Api\ContactBundle\PuzzleApiContactBundle(),
+            new Puzzle\Api\NewsletterBundle\PuzzleApiNewsletterBundle(),
+            new Puzzle\Api\ExpertiseBundle\PuzzleApiExpertiseBundle(),
+            new Puzzle\Api\PageBundle\PuzzleApiPageBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

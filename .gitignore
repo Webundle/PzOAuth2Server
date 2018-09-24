@@ -1,11 +1,17 @@
 # Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
+/app/
+# /app/cache/*
+# /app/logs/*
+# !app/cache/.gitkeep
+# !app/logs/.gitkeep
 
 # Email spool folder
-/app/spool/*
+# /app/spool/*
+
+
+# Parameters
+# /app/config/parameters.yml
+# /app/config/parameters.ini
 
 # Cache, session files and logs (Symfony3)
 /var/cache/*
@@ -19,9 +25,6 @@
 /var/log/*
 !var/log/.gitkeep
 
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
 
 # Managed by Composer
 /app/bootstrap.php.cache
@@ -50,8 +53,6 @@
 
 # Embedded web-server pid file
 /.web-server-pid
-
-/src/Api
 
 # Eclipse IDE
 /.buildpath
