@@ -60,7 +60,3 @@
 
 # Custom
 /src/Puzzle/Api
-/app/config/config.yml
-/app/AppKernel.php
-/app/config/routing.yml
-

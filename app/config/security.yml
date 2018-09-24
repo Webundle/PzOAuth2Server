@@ -125,7 +125,7 @@ security:
         - { path: ^/oauth/v2/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_USER, host: '%host_account%' }
         # API Zone
         - { path: ^/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_apis%' }
         - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_apis%' }

@@ -1,0 +1,322 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: services.yml }
+    - { resource: security.yml }
+    - { resource: '@PuzzleOAuthServerBundle/Resources/config/services.yml' }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    knp.doctrine_behaviors.blameable_subscriber.user_entity: Puzzle\OAuthServerBundle\Entity\User
+    puzzle_api_media.max_size: 104857600 #100MB
+
+framework:
+    #esi: ~
+    #translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+#        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+    templating:
+        engines: ['twig'] 
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    
+# Assetic
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+# SensioFrameworkExtra Configuration
+sensio_framework_extra:
+    request: { converters: true }
+
+# FOSOauthServer Configuration
+fos_oauth_server:
+    db_driver: orm
+    client_class:         Puzzle\OAuthServerBundle\Entity\Client
+    access_token_class:   Puzzle\OAuthServerBundle\Entity\AccessToken
+    refresh_token_class:  Puzzle\OAuthServerBundle\Entity\RefreshToken
+    auth_code_class:      Puzzle\OAuthServerBundle\Entity\AuthCode
+    model_manager_name:         ~ # change it to the name of your entity/document manager if you don't want to use the default one.
+    authorize:
+        form:
+            type:               fos_oauth_server_authorize
+            handler:            fos_oauth_server.authorize.form.handler.default
+            name:               fos_oauth_server_authorize_form
+            validation_groups:
+                # Defaults:
+                - Authorize
+                - Default
+    service:
+        storage:                fos_oauth_server.storage.default
+        client_manager:         fos_oauth_server.client_manager.default
+        access_token_manager:   fos_oauth_server.access_token_manager.default
+        refresh_token_manager:  fos_oauth_server.refresh_token_manager.default
+        auth_code_manager:      fos_oauth_server.auth_code_manager.default
+        user_provider:          pos.provider.user
+        options:
+            # Prototype
+            key:                    []
+            supported_scopes:       
+                - user
+            access_token_lifetime:  1296000 #15jours
+            refresh_token_lifetime: 1299600 #16jours
+            #auth_code_lifetime: 30
+
+            # Token type to respond with. Currently only "Bearer" supported.
+            #token_type: string
+
+            #realm:
+
+            # Enforce redirect_uri on input for both authorize and token steps.
+            enforce_redirect: true #or false
+
+            # Enforce state to be passed in authorization (see RFC 6749, section 10.12)
+            enforce_state: true #or false
+
+# Nelmio API Doc Configuration
+nelmio_api_doc:
+    documentation:
+        host:                   '%host_apis%'
+        schemes:                [http, https]
+        info:
+            title:              Puzzle API Documentation
+            description:        Puzzle API Documentation !
+            version:            1.0.0
+        securityDefinitions:
+            Bearer:
+                type:           apiKey
+                description:    'Value: Bearer {jwt}'
+                name:           Authorization
+                in:             header
+        security:
+            - Bearer: []
+    areas:
+        path_patterns: # an array of regexps
+            - ^/(?!/doc$)
+        host_patterns:
+            - ^api\.
+
+# FOSRest Configuration
+fos_rest:
+    disable_csrf_role: ROLE_API
+    body_listener:
+        enabled: true
+#        array_normalizer:
+#            service: fos_rest.normalizer.camel_keys_with_leading_underscore
+#            forms: true
+    body_converter:
+        enabled: true
+    format_listener:
+        rules:
+            - { path: ^/doc, host: '%host_apis%', priorities: [ json, html, xml ], fallback_format: xml, prefer_extension: true }
+            - { path: ^/, host: '%host_apis%', priorities: [ json, html, xml ], fallback_format: json, prefer_extension: true }
+    param_fetcher_listener: true
+    routing_loader:
+       default_format: json
+       include_format: true
+    view:
+        mime_types:
+            json: ['application/javascript+jsonp', 'application/json', 'application/json;version=1.0', 'application/json;version=1.1']
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml:  true
+            html: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+    versioning:
+            enabled: true
+            resolvers:
+                media_type:
+                    enabled: true
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Symfony\Component\Security\Core\Exception\AuthenticationException': 401
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException' : 403
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Symfony\Component\Security\Core\Exception\AuthenticationException': true
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException' : true
+            'Doctrine\ORM\OptimisticLockException': true
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    zone:
+        - { host: '%host_apis%', path: '^/v1/*' }
+
+fos_http_cache:
+    cache_control:
+        rules:
+            # the controls section values are used in a call to Response::setCache();
+            -
+                match:
+                    path: ^/v1
+                    methods: [GET]
+                headers:
+                    cache_control: { public: true, max_age: 3600, s_maxage: 3600 }
+                    last_modified: "-1 hour"
+                    vary: [Accept-Encoding, Accept-Language]
+
+# Nelmio CORS Configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/v1/':
+            allow_origin: ['*']
+            allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Custom-Auth', 'Authorization']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600
+        
+        '^/public/':
+            allow_origin: ['*']
+            allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Custom-Auth', 'Authorization']
+            allow_methods: ['GET']
+            max_age: 60
+            
+        '^/uploads/':
+            allow_origin: ['*']
+            allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Custom-Auth', 'Authorization']
+            allow_methods: ['GET']
+            max_age: 3600
+            hosts: ['^apis\.']
+            
+        '^/':
+            origin_regex: true
+            allow_origin: ['^http://localhost:[0-9]+']
+            allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept','X-Custom-Auth', 'Authorization']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'PATCH', 'OPTIONS']
+            max_age: 3600
+            hosts: ['^apis\.']  
+
+# Nelmio Security
+nelmio_security:
+    clickjacking:
+        paths:
+            '^/.*': DENY
+
+# JMS Serializer
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d\\TH:i:sP" # ATOM
+            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_timezone_set
+        array_collection:
+            initialize_excluded: false
+
+    subscribers:
+        doctrine_proxy:
+            initialize_virtual_types: false
+            initialize_excluded: false
+
+    object_constructors:
+        doctrine:
+            fallback_strategy: "null" # possible values ("null" | "exception" | "fallback")
+
+    property_naming:
+        id: 'jms_serializer.identical_property_naming_strategy'
+#        separator:  _
+#        lower_case: true
+#        enable_cache: true
+
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        auto_detection: true
+        warmup:
+            paths:
+                included: []
+                excluded: []
+                
+    expression_evaluator:
+        id: jms_serializer.expression_evaluator # auto detected
+
+    default_context:
+        serialization:
+            serialize_null: true
+            version: ~
+            attributes: {}
+            groups: ['Default']
+            enable_max_depth_checks: false
+        deserialization:
+            serialize_null: true
+            version: ~
+            attributes: {}
+            groups: ['Default']
+            enable_max_depth_checks: false
+
+# Knp\DoctrineBehaviors
+knp_doctrine_behaviors:
+    blameable:      true
+    geocodable:     ~     # Here null is converted to false
+    loggable:       ~
+    sluggable:      true
+    timestampable:  true
+    soft_deletable: true
+    # All others behaviors are disabled
