@@ -10,6 +10,7 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
+       
     
     # Default Services
     Puzzle\OAuthServerBundle\:
@@ -17,12 +18,85 @@ services:
         public: true
         exclude: '../../src/Puzzle/OAuthServerBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener,Security,Traits}'
     
+
+    Puzzle\Api\BlogBundle\:
+        resource: '../../src/Puzzle/Api/BlogBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/BlogBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\ContactBundle\:
+        resource: '../../src/Puzzle/Api/ContactBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/ContactBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\ExpertiseBundle\:
+        resource: '../../src/Puzzle/Api/ExpertiseBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/ExpertiseBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\MediaBundle\:
+        resource: '../../src/Puzzle/Api/MediaBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/MediaBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\NewsletterBundle\:
+        resource: '../../src/Puzzle/Api/NewsletterBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/NewsletterBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\PageBundle\:
+        resource: '../../src/Puzzle/Api/PageBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/PageBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
+    Puzzle\Api\UserBundle\:
+        resource: '../../src/Puzzle/Api/UserBundle/*'
+        public: true
+        exclude: '../../src/Puzzle/Api/UserBundle/{Entity,Repository,Tests,Form,Twig,Event,EventListener}'
+
     # Controller
     Puzzle\OAuthServerBundle\Controller\:
         resource: '../../src/Puzzle/OAuthServerBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
-    
+
+
+    Puzzle\Api\BlogBundle\Controller\:
+        resource: '../../src/Puzzle/Api/BlogBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\ContactBundle\Controller\:
+        resource: '../../src/Puzzle/Api/ContactBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\ExpertiseBundle\Controller\:
+        resource: '../../src/Puzzle/Api/ExpertiseBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\MediaBundle\Controller\:
+        resource: '../../src/Puzzle/Api/MediaBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\NewsletterBundle\Controller\:
+        resource: '../../src/Puzzle/Api/NewsletterBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\PageBundle\Controller\:
+        resource: '../../src/Puzzle/Api/PageBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Puzzle\Api\UserBundle\Controller\:
+        resource: '../../src/Puzzle/Api/UserBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+
     # Alias OAuthServer
     Puzzle\OAuthServerBundle\Provider\UserProvider: '@pos.provider.user'
     Puzzle\OAuthServerBundle\Service\OAuth2: '@fos_oauth_server.server'
