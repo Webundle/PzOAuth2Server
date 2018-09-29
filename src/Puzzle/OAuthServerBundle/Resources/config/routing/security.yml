@@ -1,9 +1,9 @@
-login:
-    path:  /login
-    defaults: { _controller: 'PuzzleOAuthServerBundle:Security:login' }
+# login:
+#     path:  /login
+#     defaults: { _controller: 'PuzzleOAuthServerBundle:Security:login' }
 
-login_check:
-    path: /login_check
+# login_check:
+#     path: /login_check
 
 logout:
     path:   /logout
