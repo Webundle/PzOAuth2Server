@@ -410,7 +410,7 @@ Then, set parameters in the `app/config/parameters.yml` file of your project und
 # Multi-host
 host_app: exemple.com
 host_apis: apis.%host_app%
-host_account: accounts.%hosy_app%
+host_account: accounts.%host_app%
 
 # OauthServer Default Options
 pos.default_scope: user
@@ -510,47 +510,8 @@ security:
                     a:                        { path: /, domain: ~ }
             anonymous:                        true
 
-        main:
-            host:                             '%host_account%'
-            pattern:                          '^/'
-            entry_point:                     pos.security.authentication.form_entry_point
-            entry_point:                      null
-            logout_on_user_change:            true
-            form_login:
-                provider:                     user_provider
-                check_path:                   login_check
-                login_path:                   login
-                success_handler:              pos.handler.authentication_success
-                username_parameter:           _username
-                password_parameter:           _password
-                csrf_parameter:               _csrf_token
-                csrf_token_id:                authenticate
-                post_only:                    true
-                remember_me:                  true
-                require_previous_session:     true
-            switch_user:
-                provider:                     user_provider
-                parameter:                    _swu
-                role:                         ROLE_ALLOWED_TO_SWITCH
-            remember_me:
-                secret:                       '%secret%'
-                path:                         /
-                domain:                       '%host_account%'
-                secure:                       false
-                httponly:                     true
-                lifetime:                     31536000
-                remember_me_parameter:        _remember_me
-            logout:
-                path:                         logout
-                target:                       login
-                invalidate_session:           true
-                delete_cookies:
-                    a:                        { path: /, domain: ~ }
-            anonymous:                        true
-
     access_control:
         - { path: ^/oauth/v2/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: '%host_account%' }
         - { path: ^/, roles: ROLE_USER, host: '%host_account%' }
         # API Zone
